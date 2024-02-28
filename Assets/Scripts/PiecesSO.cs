@@ -20,7 +20,6 @@ namespace KawaiiDesu
 
         [SerializeField] private Sprite _sprite;
 
-        [SerializeField] private Sprite _promotedSprite;
     }
 
     [Serializable]
