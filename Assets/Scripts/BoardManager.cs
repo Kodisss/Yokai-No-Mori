@@ -18,6 +18,8 @@ namespace KawaiiDesu
         [SerializeField] private List<Transform> cellList = new List<Transform>();
         [SerializeField] private List<PiecesSO> piecesInitialPositionList = new List<PiecesSO>();
 
+        public float snapRange;
+
         void Start()
         {
             InitializeAllGrids();
@@ -39,9 +41,24 @@ namespace KawaiiDesu
                         newPiece.PieceData = board[i, j];
                         if (j > 1) newPiece.Side = false; //turn the piece if you are opponent
                         newPiece.Init();
+                        newPiece.dragEndDelegate = SnapObject;
                     }
 
                     index++;
+                }
+            }
+        }
+
+        public void SnapObject(Transform obj)
+        {
+            foreach (Transform point in cellList)
+            {
+                if (Vector2.Distance(point.position, obj.position) <= snapRange)
+                {
+                    //obj.position = point.position;
+                    obj.parent = point;
+                    obj.localPosition = Vector2.zero;
+                    return;
                 }
             }
         }
