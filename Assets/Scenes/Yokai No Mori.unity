@@ -547,17 +547,17 @@ MonoBehaviour:
   - {fileID: 1281598018}
   piecesInitialPositionList:
   - {fileID: 11400000, guid: ad75ca59a95bfa848a817e77335d52b9, type: 2}
-  - {fileID: 11400000, guid: 33bdbe897b687fc4389e16033022d99c, type: 2}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: de081cd57e220054aaa483cfd335e2d2, type: 2}
+  - {fileID: 11400000, guid: ea478ccacab0b4d4b95b0ce98592701e, type: 2}
+  - {fileID: 11400000, guid: 2daff1ea00ccf4a4f858ca4d61d35768, type: 2}
+  - {fileID: 11400000, guid: 2daff1ea00ccf4a4f858ca4d61d35768, type: 2}
   - {fileID: 11400000, guid: ea478ccacab0b4d4b95b0ce98592701e, type: 2}
   - {fileID: 11400000, guid: de081cd57e220054aaa483cfd335e2d2, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 11400000, guid: ad75ca59a95bfa848a817e77335d52b9, type: 2}
 --- !u!1 &1062485022
 GameObject:
   m_ObjectHideFlags: 0

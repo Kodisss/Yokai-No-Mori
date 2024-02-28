@@ -37,6 +37,7 @@ namespace KawaiiDesu
                     {
                         PieceBehavior newPiece = Instantiate(piecePrefab, cells[i, j]);
                         newPiece.PieceData = board[i, j];
+                        if (j > 1) newPiece.Side = false; //turn the piece if you are opponent
                         newPiece.Init();
                     }
 
