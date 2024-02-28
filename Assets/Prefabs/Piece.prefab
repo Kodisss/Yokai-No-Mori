@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -5121368951226286064}
   - component: {fileID: 8039801889939902682}
   m_Layer: 0
-  m_Name: Kitsune
+  m_Name: Piece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,8 +28,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.45, y: 0.45, z: 0.45}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63ed5adac79f899478905474f0a9b796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pieceData: {fileID: 11400000, guid: ad75ca59a95bfa848a817e77335d52b9, type: 2}
 --- !u!212 &8039801889939902682
 SpriteRenderer:
   m_ObjectHideFlags: 0
