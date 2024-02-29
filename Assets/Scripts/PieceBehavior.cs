@@ -19,8 +19,6 @@ namespace KawaiiDesu
 
         BoardManager _board;
 
-
-
         public bool Side { get => _side; set => _side = value; }
         public PiecesSO PieceData { get => _pieceData; set => _pieceData = value; }
 
@@ -34,13 +32,9 @@ namespace KawaiiDesu
             }
         }
 
-
         void OnMouseDown()
         {
             offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            Debug.Log("BOP");
-
             _isDragging = true;
         }
 

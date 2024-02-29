@@ -55,7 +55,7 @@ namespace KawaiiDesu
             {
                 if (Vector2.Distance(point.position, obj.position) <= snapRange)
                 {
-                    //obj.position = point.position;
+                    obj.parent = null;
                     obj.parent = point;
                     obj.localPosition = Vector2.zero;
                     return;
