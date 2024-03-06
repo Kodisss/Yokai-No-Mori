@@ -532,19 +532,7 @@ MonoBehaviour:
   piecePrefab: {fileID: -5121368951226286064, guid: 2c8a7dfa2764d014f83c9f9c9fea95e7, type: 3}
   cellsParent: {fileID: 2047833407}
   snapRange: 1
-  cellList:
-  - {fileID: 2089291746}
-  - {fileID: 203060108}
-  - {fileID: 330964375}
-  - {fileID: 1903092485}
-  - {fileID: 1062485023}
-  - {fileID: 313530640}
-  - {fileID: 30414019}
-  - {fileID: 1880727490}
-  - {fileID: 320996516}
-  - {fileID: 288620695}
-  - {fileID: 810652399}
-  - {fileID: 1281598018}
+  cellList: []
   piecesPositionList:
   - {fileID: 11400000, guid: ad75ca59a95bfa848a817e77335d52b9, type: 2}
   - {fileID: 0}
