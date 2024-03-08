@@ -53,6 +53,8 @@ namespace KawaiiDesu
                 side++;
                 if(side > 3) side = 0;
             }
+
+            CheckPiecesPositions();
         }
 
         public void CheckPiecesPositions()
@@ -68,14 +70,17 @@ namespace KawaiiDesu
                 else
                 {
                     piecesPositionList[i] = null;
-                    piece.HasPiece = true;
+                    piece.HasPiece = false;
                 }
                 i++;
             }
         }
 
-        public void MovePiece(Transform newParent)
+        public void MovePiece(PhysicalCells newCell)
         {
+            if (!newCell.CanMove) return;
+
+            Transform newParent = newCell.transform;
             //Debug.Log("try to move piece on " + newParent.name);
             bool oneSelected = false;
             PieceBehavior selectedPiece = null;

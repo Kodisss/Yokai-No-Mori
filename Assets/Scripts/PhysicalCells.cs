@@ -10,8 +10,10 @@ namespace KawaiiDesu
 
         [HideInInspector] public SpriteRenderer spriteRenderer;
 
+        private bool _canMove;
         private bool _hasPiece = false;
         public bool HasPiece { get => _hasPiece; set => _hasPiece = value; }
+        public bool CanMove { get => _canMove; set => _canMove = value; }
 
         private void Start()
         {
@@ -38,16 +40,25 @@ namespace KawaiiDesu
                 PhysicalCells cell = surroundingCells[i];
                 if (cell != null)
                 {
-                    if (possibleMove[i] && cell.transform.childCount == 0)
+                    if (possibleMove[i])
                     {
-                        cell.spriteRenderer.color = new Color(0f,1f,0f,0.4f);
-                        cell.spriteRenderer.enabled = true;
+                        cell.CanMove = true;
+                        if (cell.HasPiece)
+                        {
+                            cell.spriteRenderer.color = new Color(1f, 0f, 0f, 0.4f);
+                            cell.spriteRenderer.enabled = true;
+                        }
+                        else
+                        {
+                            cell.spriteRenderer.color = new Color(0f, 1f, 0f, 0.4f);
+                            cell.spriteRenderer.enabled = true;
+                        }
                     }
-                    if (possibleMove[i] && cell.transform.childCount != 0)
+                    else
                     {
-                        cell.spriteRenderer.color = new Color(1f, 0f, 0f, 0.4f);
-                        cell.spriteRenderer.enabled = true;
+                        cell.CanMove = false;
                     }
+                    
                 }
             }
         }
@@ -62,7 +73,7 @@ namespace KawaiiDesu
 
         private void OnMouseUpAsButton()
         {
-            BoardManager.instance.MovePiece(this.transform);
+            BoardManager.instance.MovePiece(this);
         }
     }
 }
