@@ -12,8 +12,8 @@ namespace KawaiiDesu
 
         [SerializeField] private PieceBehavior piecePrefab;
         [SerializeField] private Transform cellsParent;
-        [SerializeField] private Transform graveyardUp;
-        [SerializeField] private Transform graveyardDown;
+        [SerializeField] private Graveyard graveyardUp;
+        [SerializeField] private Graveyard graveyardDown;
 
         [Header("All lists to initialize the board")]
         [SerializeField] public List<PhysicalCells> cellList = new List<PhysicalCells>();
@@ -79,6 +79,7 @@ namespace KawaiiDesu
 
         public void MovePiece(PhysicalCells newCell)
         {
+            // si on peut pas aller ici on sort
             if (!newCell.CanMove) return;
 
             Transform newParent = newCell.transform;
@@ -86,6 +87,7 @@ namespace KawaiiDesu
             bool oneSelected = false;
             PieceBehavior selectedPiece = null;
 
+            // on check la piece selectionnée
             foreach(PieceBehavior piece in pieceBehaviors)
             {
                 if (piece != null && piece.Selected)
@@ -95,8 +97,10 @@ namespace KawaiiDesu
                 }
             }
 
+            // si aucune pièce selectionnée on sort
             if (!oneSelected) return;
 
+            // on check si on doit capturer et on bouge la pièce capturée en fonction
             if (newCell.HasPiece)
             {
                 PieceBehavior otherPiece = newCell.GetComponentInChildren<PieceBehavior>();
@@ -110,22 +114,21 @@ namespace KawaiiDesu
                     otherPiece.transform.parent = null;
                     if (otherPiece.Side)
                     {
-                        otherPiece.transform.parent = graveyardUp;
-                        otherPiece.transform.localPosition = Vector2.zero;
+                        graveyardUp.CapturedPiece(otherPiece);
                     }
                     else
                     {
-                        otherPiece.transform.parent = graveyardDown;
-                        otherPiece.transform.localPosition = Vector2.zero;
+                        graveyardDown.CapturedPiece(otherPiece);
                     }
                 }
             }
 
-
+            // on bouge la pièce en fonction
             selectedPiece.transform.parent = null;
             selectedPiece.transform.parent = newParent;
             selectedPiece.transform.localPosition = Vector2.zero;
             selectedPiece.Selected = false;
+            if (selectedPiece.IsCaptured) selectedPiece.IsCaptured = false; // reset the captured state
             selectedPiece.AllColliders(true);
 
             foreach(PhysicalCells cell in cellList)
@@ -134,14 +137,36 @@ namespace KawaiiDesu
             }
 
             CheckPiecesPositions();
-            ResetCanMoveStates();
+            ResetCellsStates();
         }
 
-        private void ResetCanMoveStates()
+        public void HideAllSpriteRenderer()
+        {
+            foreach (PhysicalCells cell in cellList)
+            {
+                cell.spriteRenderer.enabled = false;
+            }
+        }
+
+        public void ParachutableCells()
+        {
+            foreach (PhysicalCells cell in cellList)
+            {
+                if (!cell.HasPiece)
+                {
+                    cell.CanMove = true;
+                    cell.spriteRenderer.color = new Color(0f, 0f, 1f, 0.4f);
+                    cell.spriteRenderer.enabled = true;
+                }
+            }
+        }
+
+        private void ResetCellsStates()
         {
             foreach(PhysicalCells cell in cellList)
             {
                 cell.CanMove = false;
+                cell.CanParachute = false;
             }
         }
     }

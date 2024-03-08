@@ -36,16 +36,35 @@ namespace KawaiiDesu
         {
             if (!_selected)
             {
-                transform.GetComponentInParent<PhysicalCells>().ShowColorsAround(this);
-                AllColliders(false);
-                _selected = true;
+                if (_isCaptured)
+                {
+                    ParachutePiece();
+                }
+                else
+                {
+                    MovePieceFromBoard();
+                }
             }
             else
             {
-                transform.GetComponentInParent<PhysicalCells>().HideColorsAround();
+                BoardManager.instance.HideAllSpriteRenderer();
                 AllColliders(true);
                 _selected = false;
             }
+        }
+
+        private void MovePieceFromBoard()
+        {
+            transform.GetComponentInParent<PhysicalCells>().ShowColorsAround(this);
+            AllColliders(false);
+            _selected = true;
+        }
+
+        private void ParachutePiece()
+        {
+            BoardManager.instance.ParachutableCells();
+            AllColliders(false);
+            _selected = true;
         }
 
         public void AllColliders(bool value)

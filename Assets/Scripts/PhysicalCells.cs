@@ -11,8 +11,10 @@ namespace KawaiiDesu
         [HideInInspector] public SpriteRenderer spriteRenderer;
 
         private bool _canMove = false;
+        private bool _canParachute = false;
         private bool _hasPiece = false;
         public bool HasPiece { get => _hasPiece; set => _hasPiece = value; }
+        public bool CanParachute { get => _canParachute; set => _canParachute = value; }
         public bool CanMove { get => _canMove; set => _canMove = value; }
 
         private void Start()
