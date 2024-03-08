@@ -76,7 +76,7 @@ namespace KawaiiDesu
 
         public void MovePiece(Transform newParent)
         {
-            Debug.Log("try to move piece on " + newParent.name);
+            //Debug.Log("try to move piece on " + newParent.name);
             bool oneSelected = false;
             PieceBehavior selectedPiece = null;
 

@@ -21,7 +21,7 @@ namespace KawaiiDesu
 
         public void ShowColorsAround(PieceBehavior piece)
         {
-            Debug.Log(name);
+            //Debug.Log(name);
             List<bool> possibleMove = new List<bool>();
 
             if (piece.Side)
