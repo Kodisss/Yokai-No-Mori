@@ -13,22 +13,7 @@ MonoBehaviour:
   m_Name: KitsuneSO
   m_EditorClassIdentifier: 
   _pieceName: Kitsune
-  _directions:
-  - _name: NW
-    _canGo: 1
-  - _name: N
-    _canGo: 0
-  - _name: NE
-    _canGo: 1
-  - _name: E
-    _canGo: 0
-  - _name: SE
-    _canGo: 1
-  - _name: S
-    _canGo: 0
-  - _name: SW
-    _canGo: 1
-  - _name: W
-    _canGo: 0
-  _isPromoted: 0
+  _directions: 0100010001000100
+  _directionsUpsideDown: 0100010001000100
+  _canPromote: 0
   _sprite: {fileID: 21300000, guid: 9520e20c0388b524fb8d6e459e96d308, type: 3}

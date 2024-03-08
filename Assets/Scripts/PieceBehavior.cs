@@ -7,53 +7,50 @@ namespace KawaiiDesu
 {
     public class PieceBehavior : MonoBehaviour
     {
-        public delegate void DragEndDelegate(Transform transform);
+        public delegate void DragEndDelegate(Transform transform, PieceBehavior behavior);
         public DragEndDelegate dragEndDelegate;
 
         private PiecesSO _pieceData;
         private SpriteRenderer _pieceSprite;
         private bool _side = true;
+        private bool _selected = false;
         private bool _isCaptured = false;
-        private Vector3 offset;
-        private bool _isDragging = false;
-
-        BoardManager _board;
 
         public bool Side { get => _side; set => _side = value; }
+        public bool Selected { get => _selected; set => _selected = value; }
         public PiecesSO PieceData { get => _pieceData; set => _pieceData = value; }
 
         public void Init()
         {
             _pieceSprite = GetComponent<SpriteRenderer>();
-            _pieceSprite.sprite = _pieceData.sprite;
+            _pieceSprite.sprite = _pieceData.Sprite;
             if (!_side)
             {
                 transform.Rotate(new Vector3(0, 0, 180));
             }
         }
 
-        void OnMouseDown()
+        private void OnMouseUpAsButton()
         {
-            offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            _isDragging = true;
-        }
-
-        void OnMouseUp()
-        {
-            _isDragging = false;
-            dragEndDelegate(this.transform);
-        }
-
-        void Update()
-        {
-            if (_isDragging)
+            foreach(PieceBehavior piece in BoardManager.instance.pieceBehaviors)
             {
-                Vector3 newPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offset;
-                transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
+                if(piece != null && piece != this)
+                {
+                    if (piece.Selected) return;
+                }
+            }
+
+            if (!_selected)
+            {
+                transform.GetComponentInParent<PhysicalCells>().ShowColorsAround(this);
+                _selected = true;
+            }
+            else
+            {
+                transform.GetComponentInParent<PhysicalCells>().HideColorsAround();
+                _selected = false;
             }
         }
-
-        
     }
 }
 

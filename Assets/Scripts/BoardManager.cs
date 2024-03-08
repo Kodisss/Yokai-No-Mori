@@ -6,32 +6,27 @@ using UnityEngine;
 
 namespace KawaiiDesu
 {
-    [Serializable]
-    public struct Cell
-    {
-        public Cell(Transform t, bool b)
-        {
-            transform = t;
-            isOccupied = b;
-        }
-
-        public Transform transform;
-        public bool isOccupied;
-    }
-
     public class BoardManager : MonoBehaviour
     {
+        public static BoardManager instance;
+
         [SerializeField] private PieceBehavior piecePrefab;
         [SerializeField] private Transform cellsParent;
         [SerializeField] private float snapRange;
 
         [Header("All lists to initialize the board")]
-        [SerializeField] private List<Cell> cellList = new List<Cell>();
+        [SerializeField] public List<PhysicalCells> cellList = new List<PhysicalCells>();
+        [SerializeField] public List<PieceBehavior> pieceBehaviors = new List<PieceBehavior>();
         [SerializeField] private List<PiecesSO> piecesPositionList = new List<PiecesSO>();
+
+        private void Awake()
+        {
+            if(instance == null) instance = this;
+        }
 
         void Start()
         {
-            InitializeListOfCells();
+            cellList = cellsParent.GetComponentsInChildren<PhysicalCells>().ToList<PhysicalCells>();
             InitializeAllGrids();
         }
 
@@ -48,7 +43,11 @@ namespace KawaiiDesu
                     newPiece.PieceData = piece;
                     if (side > 1) newPiece.Side = false; //turn the piece if you are opponent
                     newPiece.Init();
-                    newPiece.dragEndDelegate = SnapObject;
+                    pieceBehaviors.Add(newPiece);
+                }
+                else
+                {
+                    pieceBehaviors.Add(null);
                 }
                 index++;
                 side++;
@@ -56,82 +55,53 @@ namespace KawaiiDesu
             }
         }
 
-        private void InitializeListOfCells()
-        {
-            List<Transform> child = cellsParent.GetComponentsInChildren<Transform>().ToList<Transform>();
-
-            child.RemoveAll(x => x.tag != "Cell");
-
-            foreach (Transform cell in child)
-            {
-                Cell tempCell = new Cell();
-                tempCell.transform = cell;
-                cellList.Add(tempCell);
-            }
-        }
-
         public void CheckPiecesPositions()
         {
-            List<Transform> child = cellsParent.GetComponentsInChildren<Transform>().ToList<Transform>();
-
-            child.RemoveAll(x => x.tag != "Cell");
-
-            for(int i = 0; i < child.Count; i++)
+            int i = 0;
+            foreach(PhysicalCells piece in cellList)
             {
-                if (child[i].childCount != 0)
+                if (piece.transform.childCount != 0)
                 {
-                    piecesPositionList[i] = child[i].GetComponentInChildren<PieceBehavior>().PieceData;
-                    cellList[i] = new Cell(child[i], true);
+                    piecesPositionList[i] = piece.transform.GetComponentInChildren<PieceBehavior>().PieceData;
+                    piece.HasPiece = true;
                 }
                 else
                 {
                     piecesPositionList[i] = null;
-                    cellList[i] = new Cell(child[i], false);
+                    piece.HasPiece = true;
                 }
+                i++;
             }
         }
 
-        public void SnapObject(Transform obj)
+        public void MovePiece(Transform newParent)
         {
-            // checks if you are on the board
-            if (!OnTheBoard(obj.position))
-            {
-                obj.localPosition = Vector2.zero;
-                return;
-            }
+            Debug.Log("try to move piece on " + newParent.name);
+            bool oneSelected = false;
+            PieceBehavior selectedPiece = null;
 
-            foreach (Cell point in cellList)
+            foreach(PieceBehavior piece in pieceBehaviors)
             {
-                if (Vector2.Distance(point.transform.position, obj.position) <= snapRange)
+                if (piece != null && piece.Selected)
                 {
-                    // comes back if you are on a occupied spot
-                    if (point.isOccupied /*&& allied*/)
-                    {
-                        obj.localPosition = Vector2.zero;
-                        return;
-                    }
-                    obj.parent = null;
-                    obj.parent = point.transform;
-                    obj.localPosition = Vector2.zero;
-                    CheckPiecesPositions();
-                    return;
+                    selectedPiece = piece;
+                    oneSelected = true;
                 }
             }
-        }
 
-        //to check if a piece is on the board
-        private bool OnTheBoard(Vector3 position)
-        {
-            Debug.Log("x = " + position.x + " y = " + position.y);
-            if(position.x > 2f || position.x < -2f)
+            if (!oneSelected) return;
+
+            selectedPiece.transform.parent = null;
+            selectedPiece.transform.parent = newParent;
+            selectedPiece.transform.localPosition = Vector2.zero;
+            selectedPiece.Selected = false;
+
+            foreach(PhysicalCells cell in cellList)
             {
-                return false;
+                cell.spriteRenderer.enabled = false;
             }
-            if(position.y > 2.8f || position.y < -2.8f)
-            {
-                return false;
-            }
-            return true;
+
+            CheckPiecesPositions();
         }
     }
 }

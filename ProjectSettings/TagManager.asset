@@ -42,3 +42,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Board
+    uniqueID: 3232317803
+    locked: 0
+  - name: Piece
+    uniqueID: 3350376065
+    locked: 0
+  - name: Sprites
+    uniqueID: 477258789
+    locked: 0
