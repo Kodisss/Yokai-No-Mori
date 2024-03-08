@@ -93,6 +93,7 @@ namespace KawaiiDesu
 
         public void SnapObject(Transform obj)
         {
+            // checks if you are on the board
             if (!OnTheBoard(obj.position))
             {
                 obj.localPosition = Vector2.zero;
@@ -103,6 +104,7 @@ namespace KawaiiDesu
             {
                 if (Vector2.Distance(point.transform.position, obj.position) <= snapRange)
                 {
+                    // comes back if you are on a occupied spot
                     if (point.isOccupied /*&& allied*/)
                     {
                         obj.localPosition = Vector2.zero;
@@ -117,6 +119,7 @@ namespace KawaiiDesu
             }
         }
 
+        //to check if a piece is on the board
         private bool OnTheBoard(Vector3 position)
         {
             Debug.Log("x = " + position.x + " y = " + position.y);
