@@ -93,11 +93,17 @@ namespace KawaiiDesu
 
         public void SnapObject(Transform obj)
         {
+            if (!OnTheBoard(obj.position))
+            {
+                obj.localPosition = Vector2.zero;
+                return;
+            }
+
             foreach (Cell point in cellList)
             {
                 if (Vector2.Distance(point.transform.position, obj.position) <= snapRange)
                 {
-                    if (point.isOccupied/*&& allied*/)
+                    if (point.isOccupied /*&& allied*/)
                     {
                         obj.localPosition = Vector2.zero;
                         return;
@@ -109,6 +115,20 @@ namespace KawaiiDesu
                     return;
                 }
             }
+        }
+
+        private bool OnTheBoard(Vector3 position)
+        {
+            Debug.Log("x = " + position.x + " y = " + position.y);
+            if(position.x > 2f || position.x < -2f)
+            {
+                return false;
+            }
+            if(position.y > 2.8f || position.y < -2.8f)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
