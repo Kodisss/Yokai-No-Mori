@@ -1650,6 +1650,14 @@ MonoBehaviour:
   graveyardUp: {fileID: 2073031570}
   graveyardDown: {fileID: 866214263}
   cellList: []
+  promotingCellsUp:
+  - {fileID: 1903092487}
+  - {fileID: 1880727492}
+  - {fileID: 1281598020}
+  promotingCellsDown:
+  - {fileID: 2089291747}
+  - {fileID: 1062485025}
+  - {fileID: 320996518}
   pieceBehaviors: []
   piecesPositionList:
   - {fileID: 11400000, guid: ad75ca59a95bfa848a817e77335d52b9, type: 2}

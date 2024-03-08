@@ -17,6 +17,8 @@ namespace KawaiiDesu
 
         [Header("All lists to initialize the board")]
         [SerializeField] public List<PhysicalCells> cellList = new List<PhysicalCells>();
+        [SerializeField] private List<PhysicalCells> promotingCellsUp = new List<PhysicalCells>();
+        [SerializeField] private List<PhysicalCells> promotingCellsDown = new List<PhysicalCells>();
         [SerializeField] public List<PieceBehavior> pieceBehaviors = new List<PieceBehavior>();
         [SerializeField] private List<PiecesSO> piecesPositionList = new List<PiecesSO>();
 
@@ -128,10 +130,18 @@ namespace KawaiiDesu
             selectedPiece.transform.parent = newParent;
             selectedPiece.transform.localPosition = Vector2.zero;
             selectedPiece.Selected = false;
-            if (selectedPiece.IsCaptured) selectedPiece.IsCaptured = false; // reset the captured state
             selectedPiece.AllColliders(true);
 
-            foreach(PhysicalCells cell in cellList)
+            if (selectedPiece.IsCaptured)
+            {
+                selectedPiece.IsCaptured = false; // reset the captured state
+            }
+            else
+            {
+                PromotePiece(selectedPiece); // si elle vient pas d'être parachutée check si elle doit être promue
+            }
+
+            foreach (PhysicalCells cell in cellList)
             {
                 cell.spriteRenderer.enabled = false;
             }
@@ -157,6 +167,24 @@ namespace KawaiiDesu
                     cell.CanMove = true;
                     cell.spriteRenderer.color = new Color(0f, 0f, 1f, 0.4f);
                     cell.spriteRenderer.enabled = true;
+                }
+            }
+        }
+
+        private void PromotePiece(PieceBehavior piece)
+        {
+            if (piece.Side)
+            {
+                foreach(PhysicalCells cell in promotingCellsUp)
+                {
+
+                }
+            }
+            else
+            {
+                foreach(PhysicalCells cells in promotingCellsDown)
+                {
+
                 }
             }
         }
