@@ -1645,6 +1645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23bf673368a840e4da42ed9dd42dae12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  samurai: {fileID: 11400000, guid: 33bdbe897b687fc4389e16033022d99c, type: 2}
   piecePrefab: {fileID: -5121368951226286064, guid: 2c8a7dfa2764d014f83c9f9c9fea95e7, type: 3}
   cellsParent: {fileID: 2047833407}
   graveyardUp: {fileID: 2073031570}

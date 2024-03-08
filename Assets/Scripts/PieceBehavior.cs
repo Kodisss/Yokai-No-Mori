@@ -9,7 +9,6 @@ namespace KawaiiDesu
     public class PieceBehavior : MonoBehaviour
     {
         private PiecesSO _pieceData;
-        [SerializeField] private PiecesSO promotedThingy;
         private SpriteRenderer _pieceSprite;
         private Collider2D _pieceCollider;
         private bool _side = true;
@@ -76,15 +75,6 @@ namespace KawaiiDesu
                 {
                     piece.PieceCollider.enabled = value;
                 }
-            }
-        }
-
-        public void Promote()
-        {
-            if (PieceData.CanPromote)
-            {
-                PieceData = promotedThingy;
-                Init();
             }
         }
     }

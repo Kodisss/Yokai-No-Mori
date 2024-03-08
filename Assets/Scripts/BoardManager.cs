@@ -10,6 +10,8 @@ namespace KawaiiDesu
     {
         public static BoardManager instance;
 
+        [SerializeField] private PiecesSO samurai;
+
         [SerializeField] private PieceBehavior piecePrefab;
         [SerializeField] private Transform cellsParent;
         [SerializeField] private Graveyard graveyardUp;
@@ -177,15 +179,30 @@ namespace KawaiiDesu
             {
                 foreach(PhysicalCells cell in promotingCellsUp)
                 {
-
+                    if (cell.GetComponentInChildren<PieceBehavior>() == piece)
+                    {
+                        Promote(piece);
+                    }
                 }
             }
             else
             {
-                foreach(PhysicalCells cells in promotingCellsDown)
+                foreach(PhysicalCells cell in promotingCellsDown)
                 {
-
+                    if (cell.GetComponentInChildren<PieceBehavior>() == piece)
+                    {
+                        Promote(piece);
+                    }
                 }
+            }
+        }
+
+        private void Promote(PieceBehavior piece)
+        {
+            if (piece.PieceData.CanPromote)
+            {
+                piece.PieceData = samurai;
+                piece.Init();
             }
         }
 
