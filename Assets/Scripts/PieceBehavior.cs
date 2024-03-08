@@ -18,6 +18,7 @@ namespace KawaiiDesu
         public bool Side { get => _side; set => _side = value; }
         public bool Selected { get => _selected; set => _selected = value; }
         public PiecesSO PieceData { get => _pieceData; set => _pieceData = value; }
+        public SpriteRenderer PieceSprite { get => _pieceSprite; set => _pieceSprite = value; }
         public Collider2D PieceCollider { get => _pieceCollider; set => _pieceCollider = value; }
         public bool IsCaptured { get => _isCaptured; set => _isCaptured = value; }
 

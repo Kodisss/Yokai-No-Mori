@@ -186,6 +186,7 @@ namespace KawaiiDesu
                 {
                     if (cell.GetComponentInChildren<PieceBehavior>() == piece)
                     {
+                        piece.Side = true;
                         Promote(piece);
                     }
                 }
@@ -196,6 +197,7 @@ namespace KawaiiDesu
                 {
                     if (cell.GetComponentInChildren<PieceBehavior>() == piece)
                     {
+                        piece.Side = false;
                         Promote(piece);
                     }
                 }
@@ -207,7 +209,7 @@ namespace KawaiiDesu
             if (piece.PieceData.CanPromote)
             {
                 piece.PieceData = samurai;
-                piece.Init();
+                piece.PieceSprite.sprite = piece.PieceData.Sprite;
             }
             if (piece.PieceData.CanWin)
             {
