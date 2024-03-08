@@ -16,4 +16,5 @@ MonoBehaviour:
   _directions: 0101010101010101
   _directionsUpsideDown: 0101010101010101
   _canPromote: 0
+  _canWin: 1
   _sprite: {fileID: 21300000, guid: ac6fdec73f02b6b48be295285a72a4f2, type: 3}

@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace KawaiiDesu
 {
@@ -11,6 +13,8 @@ namespace KawaiiDesu
         public static BoardManager instance;
 
         [SerializeField] private PiecesSO samurai;
+        [SerializeField] private TMP_Text winText;
+        [SerializeField] private Canvas ui;
 
         [SerializeField] private PieceBehavior piecePrefab;
         [SerializeField] private Transform cellsParent;
@@ -31,6 +35,7 @@ namespace KawaiiDesu
 
         void Start()
         {
+            ui.enabled = false;
             cellList = cellsParent.GetComponentsInChildren<PhysicalCells>().ToList<PhysicalCells>();
             InitializeAllGrids();
         }
@@ -204,6 +209,18 @@ namespace KawaiiDesu
                 piece.PieceData = samurai;
                 piece.Init();
             }
+            if (piece.PieceData.CanWin)
+            {
+                if (piece.Side)
+                {
+                    winText.text = "DOWN WINS!!!";
+                }
+                else
+                {
+                    winText.text = "UP WINS!!!";
+                }
+                ui.enabled = true;
+            }
         }
 
         private void ResetCellsStates()
@@ -213,6 +230,11 @@ namespace KawaiiDesu
                 cell.CanMove = false;
                 cell.CanParachute = false;
             }
+        }
+
+        public void RestartTheGame()
+        {
+            SceneManager.LoadScene("Yokai No Mori");
         }
     }
 }

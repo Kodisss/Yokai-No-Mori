@@ -22,6 +22,9 @@ namespace KawaiiDesu
         [SerializeField] private bool _canPromote = false;
         public bool CanPromote { get => _canPromote; }
 
+        [SerializeField] private bool _canWin = false;
+        public bool CanWin { get => _canWin; }
+
         [SerializeField] private int[][] _coordinates;
         public int[][] Coordinates { get => _coordinates;}
 
