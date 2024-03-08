@@ -12,7 +12,8 @@ namespace KawaiiDesu
 
         [SerializeField] private PieceBehavior piecePrefab;
         [SerializeField] private Transform cellsParent;
-        [SerializeField] private float snapRange;
+        [SerializeField] private Transform graveyardUp;
+        [SerializeField] private Transform graveyardDown;
 
         [Header("All lists to initialize the board")]
         [SerializeField] public List<PhysicalCells> cellList = new List<PhysicalCells>();
@@ -96,10 +97,36 @@ namespace KawaiiDesu
 
             if (!oneSelected) return;
 
+            if (newCell.HasPiece)
+            {
+                PieceBehavior otherPiece = newCell.GetComponentInChildren<PieceBehavior>();
+                if (otherPiece.Side == selectedPiece.Side)
+                {
+                    return;
+                }
+                else
+                {
+                    otherPiece.IsCaptured = true;
+                    otherPiece.transform.parent = null;
+                    if (otherPiece.Side)
+                    {
+                        otherPiece.transform.parent = graveyardUp;
+                        otherPiece.transform.localPosition = Vector2.zero;
+                    }
+                    else
+                    {
+                        otherPiece.transform.parent = graveyardDown;
+                        otherPiece.transform.localPosition = Vector2.zero;
+                    }
+                }
+            }
+
+
             selectedPiece.transform.parent = null;
             selectedPiece.transform.parent = newParent;
             selectedPiece.transform.localPosition = Vector2.zero;
             selectedPiece.Selected = false;
+            selectedPiece.AllColliders(true);
 
             foreach(PhysicalCells cell in cellList)
             {
@@ -107,6 +134,15 @@ namespace KawaiiDesu
             }
 
             CheckPiecesPositions();
+            ResetCanMoveStates();
+        }
+
+        private void ResetCanMoveStates()
+        {
+            foreach(PhysicalCells cell in cellList)
+            {
+                cell.CanMove = false;
+            }
         }
     }
 }
