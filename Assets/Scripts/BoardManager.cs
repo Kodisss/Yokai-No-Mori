@@ -28,6 +28,8 @@ namespace KawaiiDesu
         [SerializeField] public List<PieceBehavior> pieceBehaviors = new List<PieceBehavior>();
         [SerializeField] private List<PiecesSO> piecesPositionList = new List<PiecesSO>();
 
+        [HideInInspector] public bool someoneWon = false;
+
         private void Awake()
         {
             if(instance == null) instance = this;
@@ -35,6 +37,7 @@ namespace KawaiiDesu
 
         void Start()
         {
+            someoneWon = false;
             ui.enabled = false;
             cellList = cellsParent.GetComponentsInChildren<PhysicalCells>().ToList<PhysicalCells>();
             InitializeAllGrids();
@@ -229,7 +232,7 @@ namespace KawaiiDesu
             {
                 winText.text = "UP WINS!!!";
             }
-            
+            someoneWon = true;
             ui.enabled = true;
         }
 

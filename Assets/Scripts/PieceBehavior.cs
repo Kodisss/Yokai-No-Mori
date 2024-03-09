@@ -35,6 +35,8 @@ namespace KawaiiDesu
 
         private void OnMouseUpAsButton()
         {
+            if (BoardManager.instance.someoneWon) return;
+
             if (!_selected)
             {
                 if (_isCaptured)
