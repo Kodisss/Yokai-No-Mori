@@ -27,6 +27,8 @@ namespace KawaiiDesu
         {
             //Debug.Log(name);
             List<bool> possibleMove = new List<bool>();
+            spriteRenderer.color = new Color(1f, 1f, 1f, 0.4f);
+            spriteRenderer.enabled = true;
 
             if (piece.Side)
             {

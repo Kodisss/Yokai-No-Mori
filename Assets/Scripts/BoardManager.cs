@@ -129,6 +129,8 @@ namespace KawaiiDesu
                     {
                         graveyardDown.CapturedPiece(otherPiece);
                     }
+
+                    if (otherPiece.PieceData.CanWin) Win(!otherPiece.Side);
                 }
             }
 
@@ -137,7 +139,7 @@ namespace KawaiiDesu
             selectedPiece.transform.parent = newParent;
             selectedPiece.transform.localPosition = Vector2.zero;
             selectedPiece.Selected = false;
-            selectedPiece.AllColliders(true);
+            AllColliders(true, selectedPiece);
 
             if (selectedPiece.IsCaptured)
             {
@@ -213,16 +215,22 @@ namespace KawaiiDesu
             }
             if (piece.PieceData.CanWin)
             {
-                if (piece.Side)
-                {
-                    winText.text = "DOWN WINS!!!";
-                }
-                else
-                {
-                    winText.text = "UP WINS!!!";
-                }
-                ui.enabled = true;
+                Win(piece.Side);
             }
+        }
+
+        private void Win(bool side)
+        {
+            if (side)
+            {
+                winText.text = "DOWN WINS!!!";
+            }
+            else
+            {
+                winText.text = "UP WINS!!!";
+            }
+            
+            ui.enabled = true;
         }
 
         private void ResetCellsStates()
@@ -237,6 +245,17 @@ namespace KawaiiDesu
         public void RestartTheGame()
         {
             SceneManager.LoadScene("Yokai No Mori");
+        }
+
+        public void AllColliders(bool value, PieceBehavior doNotDeactivate)
+        {
+            foreach (PieceBehavior piece in pieceBehaviors)
+            {
+                if (piece != null && piece != doNotDeactivate)
+                {
+                    piece.PieceCollider.enabled = value;
+                }
+            }
         }
     }
 }
