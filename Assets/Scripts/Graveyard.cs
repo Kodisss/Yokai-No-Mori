@@ -12,12 +12,29 @@ namespace KawaiiDesu
         private void Start()
         {
             anchorList = transform.GetComponentsInChildren<Transform>().ToList<Transform>();
+            anchorList.RemoveAll(x => x.tag != "Anchor");
         }
 
         public void CapturedPiece(PieceBehavior piece)
         {
             piece.transform.parent = GetFirstTransformAvailable();
             piece.transform.localPosition = Vector2.zero;
+        }
+
+        public List<PiecesSO> GetAllPiecesInGraveyard()
+        {
+            List<PiecesSO> res = new List<PiecesSO>();
+
+            foreach (Transform t in anchorList)
+            {
+                PieceBehavior pieceBehavior = t.GetComponentInChildren<PieceBehavior>();
+                if (pieceBehavior != null)
+                {
+                    res.Add(pieceBehavior.PieceData);
+                }
+            }
+
+            return res;
         }
 
         private Transform GetFirstTransformAvailable()

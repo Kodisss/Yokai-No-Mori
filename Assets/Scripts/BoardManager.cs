@@ -25,10 +25,20 @@ namespace KawaiiDesu
         [SerializeField] public List<PhysicalCells> cellList = new List<PhysicalCells>();
         [SerializeField] private List<PhysicalCells> promotingCellsUp = new List<PhysicalCells>();
         [SerializeField] private List<PhysicalCells> promotingCellsDown = new List<PhysicalCells>();
-        [SerializeField] public List<PieceBehavior> pieceBehaviors = new List<PieceBehavior>();
+
+        [Header("All lists to keep track of all pieces")]
         [SerializeField] private List<PiecesSO> piecesPositionList = new List<PiecesSO>();
+        [SerializeField] private List<PiecesSO> graveyardUpList = new List<PiecesSO>();
+        [SerializeField] private List<PiecesSO> graveyardDownList = new List<PiecesSO>();
+
+        private List<PieceBehavior> pieceBehaviors = new List<PieceBehavior>();
 
         [HideInInspector] public bool someoneWon = false;
+
+        //access lists for IA integration
+        public List<PiecesSO> GetPiecePositions { get => piecesPositionList; }
+        public List<PiecesSO> GetGraveyardUp { get => graveyardUpList; }
+        public List<PiecesSO> GetGraveyardDown { get => graveyardDownList; }
 
         private void Awake()
         {
@@ -58,10 +68,7 @@ namespace KawaiiDesu
                     newPiece.Init();
                     pieceBehaviors.Add(newPiece);
                 }
-                else
-                {
-                    pieceBehaviors.Add(null);
-                }
+
                 index++;
                 side++;
                 if(side > 3) side = 0;
@@ -87,6 +94,8 @@ namespace KawaiiDesu
                 }
                 i++;
             }
+            graveyardUpList = graveyardUp.GetAllPiecesInGraveyard();
+            graveyardDownList = graveyardDown.GetAllPiecesInGraveyard();
         }
 
         public void MovePiece(PhysicalCells newCell)
