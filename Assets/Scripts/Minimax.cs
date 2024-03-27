@@ -13,8 +13,6 @@ namespace KawaiiDesu
 
     public class Minimax : MonoBehaviour
     {
-
-
         BoardManager _board;
 
         public int MinimaxAlgo(GameState state, int _depth, bool _maxPlayer)
@@ -28,20 +26,25 @@ namespace KawaiiDesu
             {
                 float value = Mathf.NegativeInfinity;
 
-                foreach (PhysicalCells cells in  _board.cellList)
+                foreach (PiecesSO pieces in  _board.GetPiecePositions)
                 {
-                    int score = MinimaxAlgo(GameState.Win, _depth, true);
+
+
+                    int score = MinimaxAlgo(GameState.Win, _depth - 1, true);
                     value = Mathf.Max(value, score);
                 }
                 return (int)value;
             }
+
             else
             {
                 float value = Mathf.Infinity;
 
-                foreach (PhysicalCells cells in _board.cellList)
+                foreach (PiecesSO pieces in _board.GetPiecePositions)
                 {
-                    int score = MinimaxAlgo(GameState.Win, _depth, false);
+
+
+                    int score = MinimaxAlgo(GameState.Win, _depth - 1, false);
                     value = Mathf.Min(value, score);
                 }
                 return (int)value;
@@ -50,8 +53,12 @@ namespace KawaiiDesu
         }
 
 
-        public void EvaluateGame()
+        public void EvaluateGame(GameState state)
         {
+            bool isKingCaptured = false;
+
+            _board.CheckPiecesPositions();
+
 
         }
 
